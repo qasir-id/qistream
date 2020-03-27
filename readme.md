@@ -6,7 +6,6 @@ simple package stream in qasir tech
 
 ```
 # Go modules
-$> go get -u github.com/qasir-id/qistream
 $> go mod tidy
 ```
 
@@ -33,4 +32,6 @@ import (
     ctx := context.Background()
 	var pubMessage []byte
 	pubsub.PublishTopic(ctx, pubMessage, "TOPIC_NAME")
+    
+    //you can also see in example folder
 ```
