@@ -14,9 +14,8 @@ func PublishTopic(ctx context.Context, pubMessage []byte, topicName string) erro
 
 	defer topic.Stop()
 
-	msg, _ := json.Marshal(pubMessage)
-	pubRes := topic.Publish(ctx, &pubsub.Message{Data: msg})
-	fmt.Println("Pubsub message : " + string(msg))
+	pubRes := topic.Publish(ctx, &pubsub.Message{Data: pubMessage})
+	fmt.Println("Pubsub message : " + string(pubMessage))
 	if _, err := pubRes.Get(ctx); err != nil {
 		return err
 	}
