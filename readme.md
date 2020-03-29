@@ -10,7 +10,17 @@ $> go mod tidy
 ```
 
 ## Basic Usage
+ 
+Env
+```
+convert file credential.json to base64 --> https://www.base64decode.org/
+GCP_CREDENTIALS=someCodeBas64
+GCP_PROJECT_ID=ProjectId
+PUBSUB_TOPIC=TopicName
+PUBSUB_SUBSCRIPTION_ID=SubcriptionName
+```
 
+Sample
 ```
 import (
 	"log"
