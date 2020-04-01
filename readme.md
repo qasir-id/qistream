@@ -5,6 +5,7 @@ simple package stream in qasir tech
 ## Instalation
 
 ```
+# go get github.com/qasir-id/qistream
 # Go modules
 $> go mod tidy
 ```
@@ -26,6 +27,7 @@ import (
 	"log"
 	"github.com/jinzhu/gorm"
 	"github.com/qasir-id/qistream/service/pubsub"
+    psg "cloud.google.com/go/pubsub"
 )
     //for async
 	log.Println("starting Pub/Sub Client ")
