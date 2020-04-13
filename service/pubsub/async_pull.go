@@ -32,7 +32,7 @@ func NewPubSubService(db *gorm.DB, client *pubsub.Client) *PubSub {
 }
 
 var (
-	source = ""
+	Source = ""
 )
 
 func (ps *PubSub) SaveLog(msg *pubsub.Message, errs []string, mu sync.Mutex) {
@@ -44,7 +44,7 @@ func (ps *PubSub) SaveLog(msg *pubsub.Message, errs []string, mu sync.Mutex) {
 		PublishTime:    &msg.PublishTime,
 		ReceiveTime:    &msg.PublishTime,
 		CreatedAt:      time.Now(),
-		Source:         source,
+		Source:         Source,
 		Topic:          os.Getenv("PUBSUB_TOPIC"),
 		SubscriptionID: os.Getenv("PUBSUB_SUBSCRIPTION_ID"),
 		ErrorProcess:   strings.Join(errs, "|"),
