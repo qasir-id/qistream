@@ -5,7 +5,6 @@ simple package stream in qasir tech
 ## Instalation
 
 ```
-# go get github.com/qasir-id/qistream
 # Go modules
 $> go mod tidy
 ```
@@ -19,9 +18,14 @@ GCP_CREDENTIALS=someCodeBas64
 GCP_PROJECT_ID=ProjectId
 PUBSUB_TOPIC=TopicName
 PUBSUB_SUBSCRIPTION_ID=SubcriptionName
+
+PUBSUB_TOPIC_CATEGORY=TopicName
 ```
 
-Sample
+### Sample
+
+## Pull Message
+
 ```
 import (
 	"log"
@@ -33,6 +37,9 @@ import (
 	log.Println("starting Pub/Sub Client ")
 	// RUN service PubSub
 	var db *gorm.DB
+
+        pubsub.Source = "source service" // set source log service 
+
 		psService := pubsub.NewPubSubService(conn, pubsub.NewClient())
     	if err := psService.AsyncPull(func(ctx context.Context, msg *psg.Message) {
     		var mu sync.Mutex
@@ -45,7 +52,7 @@ import (
     
                 switch 1 {
                 case 1 :
-                    err := salesInventory.Handle(ctx, req)
+                    err := createCategory.Handle(ctx, req)
                       //save error to logs pubsub
                       if err != nil {
                       errs = append(errs, err.Error())
@@ -59,12 +66,34 @@ import (
     		}()
     	}); err != nil {
     		log.Fatalf("failed to pull pub/sub message : %v", err)
+    	}  
+```
+
+## Publish Message
+
+- struct recommendation
+```
+type PubSubMessage struct {
+	Action string       // action message ex: category:create or category:delete etc
+	Data   interface{}  // data for processing action
+}
+
+```
+- example
+
+```
+    msg := PubSubMessage{
+    		Action: "create:category",
+    		Data:   {"id":0,"name":"Umum", ...},
     	}
 
-    //for publish
     ctx := context.Background()
-	var pubMessage []byte
-	pubsub.PublishTopic(ctx, pubMessage, "TOPIC_NAME")
+	byteFirebasePublish, err := json.Marshal(msg)
+    		if err != nil {
+    			return nil, err
+    		}
     
-    //you can also see in example folder
+	pubsub.PublishTopic(ctx, byteFirebasePublish, "PUBSUB_TOPIC_CATEGORY")
 ```
+
+*you can also see in example folder*
