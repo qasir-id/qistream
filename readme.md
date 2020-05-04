@@ -6,7 +6,7 @@ simple package stream in qasir tech
 
 ```
 # Go modules
-$> go mod tidy
+$> go mod tidy or go get github.com/qasir-id/qistream
 ```
 
 ## Basic Usage
