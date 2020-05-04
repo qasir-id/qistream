@@ -2,6 +2,7 @@ package pubsub
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"os"
 	"strings"
@@ -38,9 +39,11 @@ var (
 func (ps *PubSub) SaveLog(msg *pubsub.Message, errs []string, mu sync.Mutex) {
 	// log pub/sub message
 	log.Println("[POS] [pos-inventory-stream] pubsub insert log")
+	bytesAttribute, _ := json.Marshal(msg.Attributes)
 	_, _ = ps.log.Create(ps.db, model.PubSubMessageLog{
 		PubsubID:       msg.ID,
 		Data:           string(msg.Data),
+		Attribute:      string(bytesAttribute),
 		PublishTime:    &msg.PublishTime,
 		ReceiveTime:    &msg.PublishTime,
 		CreatedAt:      time.Now(),
