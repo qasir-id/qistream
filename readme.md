@@ -26,7 +26,7 @@ PUBSUB_TOPIC_CATEGORY=TopicName
 
 ## Pull Message
 
-```
+```go
 import (
 	"log"
 	"github.com/jinzhu/gorm"
