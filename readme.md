@@ -81,19 +81,19 @@ type PubSubMessage struct {
 ```
 - example
 
-```
+```go
     msg := PubSubMessage{
     		Action: "create:category",
     		Data:   {"id":0,"name":"Umum", ...},
     	}
 
     ctx := context.Background()
-	byteFirebasePublish, err := json.Marshal(msg)
+	bytePublish, err := json.Marshal(msg)
     		if err != nil {
     			return nil, err
     		}
     
-	pubsub.PublishTopic(ctx, byteFirebasePublish, "PUBSUB_TOPIC_CATEGORY")
+	pubsub.PublishTopic(ctx, bytePublish, "PUBSUB_TOPIC_CATEGORY")
 ```
 
 *you can also see in example folder*
