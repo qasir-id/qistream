@@ -12,10 +12,10 @@ import (
 func PublishTopic(ctx context.Context, pubMessage []byte, topicName string) error {
 	client := NewClient()
 	topic := client.Topic(topicName)
-	
+
 	defer func() {
 		topic.Stop()
-		client.Close()
+		_ = client.Close()
 	}()
 
 	pubRes := topic.Publish(ctx, &pubsub.Message{Data: pubMessage})
@@ -32,7 +32,10 @@ func Publish(ctx context.Context,message pubsub.Message,topicName string) error{
 	client := NewClient()
 	topic := client.Topic(topicName)
 
-	defer topic.Stop()
+	defer func() {
+		topic.Stop()
+		_ = client.Close()
+	}()
 
 	pubRes := topic.Publish(ctx, &message)
 	bytes, _ := json.Marshal(message)
