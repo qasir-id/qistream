@@ -12,8 +12,11 @@ import (
 func PublishTopic(ctx context.Context, pubMessage []byte, topicName string) error {
 	client := NewClient()
 	topic := client.Topic(topicName)
-
-	defer topic.Stop()
+	
+	defer func() {
+		topic.Stop()
+		client.Close()
+	}()
 
 	pubRes := topic.Publish(ctx, &pubsub.Message{Data: pubMessage})
 	fmt.Println("Pubsub message : " + string(pubMessage))
